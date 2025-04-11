@@ -3,10 +3,8 @@ package example.com.transaction_interceptor.transfer;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -14,8 +12,12 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/transfer")
 public class TransferController {
 
-    @PostMapping
-    public Mono<Void> transfer(@Valid @RequestBody Transfer transfer) {
+    private final TransferService transferService;
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Mono<String> transfer(@Valid @RequestBody TransferDto transferDto) {
+        transferService.send(transferDto.toTransfer());
+        return Mono.just("Success!");
     }
 }

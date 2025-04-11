@@ -7,23 +7,21 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
 @Builder
 public class Transfer {
 
-    @NotNull
-    @Length(min = 12, max = 12)
+    private UUID uuid;
+
     private String sender;
 
-    @NotNull
-    @Length(min = 12, max = 12)
     private String receiver;
 
-    @NotNull
-    @Positive
     private BigDecimal amount;
+
 
 //    private float commission;
 }
